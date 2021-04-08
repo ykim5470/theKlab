@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Row, Col, Card, CardBody } from 'reactstrap'
-import LogList from '../../components/saleslog/SalesLogList'
+import BoardWrite from '../../components/board/BoardWrite'
 
-const SalesLog = () => {
+const Write = () => {
   return (
     <React.Fragment>
       <div className=''>
@@ -12,7 +12,7 @@ const SalesLog = () => {
               <Row>
                 <Col lg={7}>
                   <h4 className='page-title'>
-                    더클랩 &nbsp;&gt;&nbsp; 세일즈로그 현황
+                    더클랩 &nbsp;&gt;&nbsp; 게시글 작성
                   </h4>
                 </Col>
                 <Col lg={5} className='mt-lg-3 mt-md-0'></Col>
@@ -20,18 +20,19 @@ const SalesLog = () => {
             </div>
           </Col>
         </Row>
+
         <Row>
           <Col lg={12}>
             <Card>
               <CardBody>
-                <LogList />
+                <BoardWrite />
               </CardBody>
             </Card>
           </Col>
         </Row>
-        {/* Saleslog */}
       </div>
     </React.Fragment>
   )
 }
-export default SalesLog
+
+export default Write

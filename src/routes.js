@@ -1,10 +1,13 @@
 import React from 'react'
 import { Redirect, Route } from 'react-router-dom'
 import { isUserAuthenticated } from './helpers/authUtils'
-import Dashboard from './pages/dashboards/Dashboard'
+import Dashboard from './pages/dashboard/Dashboard'
 import SalesLog from './pages/saleslog/Saleslog'
 import Login from './pages/auth/Login'
 import Logout from './pages/auth/Logout'
+import { useSelector } from 'react-redux'
+import Write from './pages/boardWrite'
+import Organization from './pages/organization'
 
 // // lazy load all the views
 // const Dashboard = React.lazy(() => import('./pages/dashboards/index'))
@@ -17,24 +20,37 @@ import Logout from './pages/auth/Logout'
 // const Logout = React.lazy(() => import('./pages/auth/Logout'))
 
 // handle auth and authorization
+// const PrivateRoute = ({ component: Component, roles, ...rest }) => (
+//   <Route
+//     {...rest}
+//     render={(props) => {
+//       const isAuthTokenValid = isUserAuthenticated()
+//       if (!isAuthTokenValid) {
+//         // not logged in so redirect to login page with the return url
+//         return <Redirect to={{ pathname: '/login' }} />
+//       }
+//       // authorised so return component
+//       return <Component {...props} />
+//     }}
+//   />
+// )
+
+// if (isUserAuthenticated()) {
+//   return <Redirect to='/login' />
+// }
+
 const PrivateRoute = () => {
-  console.log(isUserAuthenticated())
-  return (
-    <Route
-      render={() => {
-        if (!isUserAuthenticated()) {
-          return <Redirect to={{ pathname: '/login' }} />
-        }
-        return <Redirect to={{ pathname: '/dashboard' }} />
-      }}
-    />
-  )
+  const state = useSelector((state) => state)
+  console.log(state.auth)
+  if (!state.auth) {
+    return <Redirect to='/login' />
+  }
+  return <Redirect to='/dashboard' />
 }
 
 const routes = [
   // auth and account
   { path: '/login', name: 'Login', component: Login, route: Route },
-  // <Route key=0 path='/login' component={Login}/>
   { path: '/logout', name: 'Logout', component: Logout, route: Route },
 
   // other pages
@@ -57,7 +73,21 @@ const routes = [
     path: '/dashboard/saleslog',
     name: 'SalesLog',
     component: SalesLog,
-    route: PrivateRoute,
+    route: Route,
+    roles: ['Admin'],
+  },
+  {
+    path: '/dashboard/write',
+    name: 'Write',
+    component: Write,
+    route: Route,
+    roles: ['Admin'],
+  },
+  {
+    path: '/dashboard/organization',
+    name: 'Organization',
+    component: Organization,
+    route: Route,
     roles: ['Admin'],
   },
 ]

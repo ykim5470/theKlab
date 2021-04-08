@@ -4,7 +4,7 @@ import { BrowserRouter, useLocation, Route } from 'react-router-dom'
 import { isUserAuthenticated } from './helpers/authUtils'
 import queryString from 'query-string'
 import { Cookies } from 'react-cookie'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { tokenAuth, authRequest } from './redux/thunk'
 import AuthLayout from './components/AuthLayout'
 import NonAuthLayout from './components/NonAuthLayout'
@@ -13,8 +13,9 @@ import NonAuthLayout from './components/NonAuthLayout'
 import './assets/scss/DefaultTheme.scss'
 
 const App = () => {
+  const state = useSelector((state) => state)
   const getLayout = (child) => {
-    return isUserAuthenticated() ? AuthLayout : NonAuthLayout
+    return state.auth ? AuthLayout : NonAuthLayout
   }
 
   const dispatch = useDispatch()

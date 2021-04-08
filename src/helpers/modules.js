@@ -61,3 +61,15 @@ export function createAccessTokenUrl() {
   const platform = 'web'
   return `${endPoint}?code=${authCode}&client_id=${clientId}&pcke=${pcke}&user_id=${userId}&platform=${platform}`
 }
+
+export function getTwoMonthAgo() {
+  var d = new Date()
+  var m = d.getMonth()
+  d.setMonth(d.getMonth() - 2)
+  // If still in same month, set date to last day of
+  // previous month
+  if (d.getMonth() === m) d.setDate(0)
+  d.setHours(0, 0, 0)
+  d.setMilliseconds(0)
+  return d.getTime()
+}
